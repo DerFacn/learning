@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    {% if title %}
+    <title>{{ title }} - Tutorial Blog!</title>
+    {% else %}
+    <title>Welcome to my page!</title>
+    {% endif %}
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mooli:400,400i,700&display=swap">
+
+    <style>
+    body {
+        font-family: 'Mooli', sans-serif;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Mooli', sans-serif;
+    }
+
+    p {
+        font-family: 'Mooli', sans-serif;
+    }
+    /* CSS for the navigation bar */
+    .navbar {
+      background-color: #007BFF;
+      overflow: hidden;
+    }
+
+    .navbar a {
+      float: left;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    .navbar a:hover {
+      background-color: #0056b3;
+    }
+    .log-block {
+      background-color: #0056b3;
+      color: white; /* Зелений шрифт */
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      white-space: nowrap;
+      border-radius: 5px;
+    }
+    </style>
+
+</head>
+<body>
+<div class="navbar">
+    {% if user %}
+    <a href="/">Index</a>
+    <a href="/auth/logout">Logout</a>
+    {% else %}
+    <a href="/auth/login">Login</a>
+    <a href="/auth/register">Register</a>
+    {% endif %}
+</div>
+<div class="log-block">
+    {{ log }}
+</div>
+{% block content %}
+{% endblock %}
+</body>
+</html>

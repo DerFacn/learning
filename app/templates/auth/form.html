@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="login-container">
+<h1>{{ title }}</h1>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<form action="/auth/{{ action }}" method="post" class="login-form">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username">
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password">
+    <button type="submit">{{ title }}!</button>
+    {% if action == "login" %}
+    <br><br>Or register a <a href="{{ url_for('auth.register') }}">new account!</a>
+    {% else %}
+    <br><br>Or <a href="{{ url_for('auth.login') }}">login!</a>
+    {% endif %}
+</form>
+</div>
+
+<style>
+    /* CSS for the login/register form */
+.login-container {
+  text-align: center;
+  margin: 100px auto;
+  max-width: 300px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.login-form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.login-form button {
+  width: 87%;
+  padding: 10px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.login-form button:hover {
+  background-color: #0056b3;
+}
+
+</style>
+
+{% endblock %}
+
+

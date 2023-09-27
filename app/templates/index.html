@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-python.min.js"></script>
+
+<h1>Hello, <i>{{ user.username }}</i>!</h1>
+Добро пожаловать, мой друг! Специально для тебя пишу этот текст на русском, хотя первый совет будет о противоположном -
+программисты любую программу пишут на английском, и только потом пишут для неё перевод. Но речь не об этом!
+Как ты наверное заметил, тебе пришлось сначало зарегистрировать аккаунт а после и войти в него? При заходе этот сайт,
+написанный мной декоратор проверяет, нет ли в session user_id, так как сессия является списком. Общедоступным в программе
+списком. Когда ты только зашел на этот сайт, ты сам по себе уже сделал гет запрос, который и отобразил те страницы)
+После заполнения формы ты отправил её на /auth/register если регистрация и /auth/login когда логин. Выглядит все это
+дело всередине следующим образом:
+
+<div class="code-block">
+    <pre><code class="language-python">
+@bp.route('/register', methods=['GET', 'POST'])
+@logged_in
+@get_log
+def register(log=None):
+    if request.method == 'POST':  # If user send form
+        username = request.form['username']  # Fetch username
+        password = request.form['password']  # Fetch password
+        if username is None:  # Checking username is not None
+            flash('Username required!')  # Flash error
+        elif password is None:  # Checking password is not None
+            flash('Password required!')  # Flash error
+        hashed_password = generate_password_hash(password)  # Hash password for store in database
+        new_user = User(username=username, password=hashed_password)  # Create new user
+        try:
+            db.session.add(new_user)  # Add user to database
+            db.session.commit()  # Accept commit - write a new user to database
+        except sqlalchemy.exc.IntegrityError:  # If user already in database
+            flash('User already exists!')  # Flash error
+        return redirect(url_for('auth.login'))  # Success!
+    return render_template('auth/form.html', title='Register', action='register', log=log)
+    # If someone just come to our register url
+    </code></pre>
+</div>
+<script>
+  Prism.highlightAll();
+</script>
+{% endblock %}
